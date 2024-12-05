@@ -5,10 +5,9 @@ const addStudent__form__button = document.querySelector(".addStudent__form__butt
 const pageSizeInput = document.querySelector("#pageSize");  
 const paginationContainer = document.querySelector("#pagination");
 
-// Загружайте студентов из localStorage, если они существуют
 let students = JSON.parse(localStorage.getItem('students')) || [];
 let currentPage = parseInt(localStorage.getItem('currentPage')) || 1;
-let pageSize = parseInt(localStorage.getItem('pageSize')) || 5; // Установите значение по умолчанию
+let pageSize = parseInt(localStorage.getItem('pageSize')) || 5; 
 
 function renderStudents(studentsPage) {
     studentsTable__tbody.innerHTML = '';

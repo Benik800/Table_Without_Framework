@@ -83,6 +83,8 @@
       transition: background-color 0.3s; /* Плавный переход для фона при наведении */
     }
 
+    
+
     .addStudent__form__button:hover {
       background-color: #9dff00;
       color: #000;
@@ -183,5 +185,15 @@
   align-items: center;
   justify-content: center;
   margin-left: 15px;
+  text-align: center;
+}
+
+
+.pagination-controls{
+  align-items: center;
+  justify-content: center;
+}
+
+.table{
   text-align: center;
 }
