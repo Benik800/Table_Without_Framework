@@ -7,7 +7,7 @@ const paginationContainer = document.querySelector("#pagination");
 
 let students = JSON.parse(localStorage.getItem('students')) || [];
 let currentPage = parseInt(localStorage.getItem('currentPage')) || 1;
-let pageSize = parseInt(localStorage.getItem('pageSize')) || 5; 
+let pageSize = parseInt(localStorage.getItem('pageSize')) || 5;
 
 function renderStudents(studentsPage) {
     studentsTable__tbody.innerHTML = '';
@@ -58,7 +58,7 @@ function renderStudents(studentsPage) {
 
         delBtn.addEventListener("click", () => {
             students.splice(index + (currentPage - 1) * pageSize, 1);
-            updatePagination(); // Обновляем отображение после удаления
+            updatePagination();
         });
 
         delTd.appendChild(delBtn);
@@ -134,7 +134,7 @@ function updatePagination() {
     renderStudents(studentsPage);
     renderPaginationControls();
     checkStudents();
-    saveToLocalStorage(); // Сохраняем состояние в localStorage
+    saveToLocalStorage();
 }
 
 function saveToLocalStorage() {
@@ -164,27 +164,22 @@ function capitalize(string) {
     return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 }
 
-addStudent__form__button.addEventListener('click', async function (event) {
+addStudent__form__button.addEventListener('click', function (event) {
     event.preventDefault();
 
     let formData = new FormData(addStudent__form);
     let firstName = formData.get('FirstName').trim();
-    console.log(firstName);
     let lastName = formData.get('LastName').trim();
-    console.log(lastName);
     let middleName = formData.get('MiddleName').trim();
-    console.log(middleName);
     let dateOfBirthInput = formData.get('DateOfBirth');
     let group = formData.get('Group').trim();
     let averageScore = parseFloat(formData.get('AverageScore'));
 
-    // Проверка всех полей
     if (!firstName || !lastName || !middleName || !dateOfBirthInput || !group || isNaN(averageScore)) {
         alert('Заполните все поля');
         return;
     }
 
-    // Проверка на буквы в фамилии, имени и отчестве
     if (!/^[A-Za-zА-Яа-яЁё]+$/.test(firstName) || 
         !/^[A-Za-zА-Яа-яЁё]+$/.test(lastName) || 
         !/^[A-Za-zА-Яа-яЁё]+$/.test(middleName)) {
@@ -192,7 +187,6 @@ addStudent__form__button.addEventListener('click', async function (event) {
         return;
     }
 
-    // Проверка даты рождения
     let dateOfBirth = new Date(dateOfBirthInput);
     let minDate = new Date('1900-01-01');
     let maxDate = new Date('2010-01-01');
@@ -201,19 +195,15 @@ addStudent__form__button.addEventListener('click', async function (event) {
         alert('Дата рождения должна быть между 01.01.1900 и 01.01.2010');
         return;
     }
-
-    // Проверка среднего балла
     if (averageScore < 2.00 || averageScore > 5.00) {
         alert('Средний балл должен быть в диапазоне от 2.00 до 5.00');
         return;
     }
 
-    // Форматирование имен
     firstName = capitalize(firstName);
     lastName = capitalize(lastName);
     middleName = capitalize(middleName);
 
-    // Создание объекта студента
     let student = {
         firstName: firstName,
         lastName: lastName,
@@ -223,18 +213,16 @@ addStudent__form__button.addEventListener('click', async function (event) {
         averageScore: averageScore
     };
 
-    // Добавление студента в массив
     students.push(student); 
-    updatePagination(); // Обновляем отображение после добавления студента
-    addStudent__form.reset(); // Сбрасываем форму
+    updatePagination();
+    addStudent__form.reset();
 });
 
-// Обработчик для изменения размера страницы
+
 pageSizeInput.addEventListener('change', (event) => {
-    pageSize = parseInt(event.target.value) || 5; // Считываем новое значение pageSize
-    currentPage = 1; // Сбрасываем на первую страницу при изменении размера
-    updatePagination(); // Обновляем отображение
+    pageSize = parseInt(event.target.value) || 5; 
+    currentPage = 1; 
+    updatePagination(); 
 });
 
-// Инициализация пагинации при загрузке страницы
 updatePagination();

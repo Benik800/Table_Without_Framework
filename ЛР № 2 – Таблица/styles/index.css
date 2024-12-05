@@ -197,3 +197,10 @@
 .table{
   text-align: center;
 }
+
+#pageSize{
+  align-self: center;
+  margin-bottom: 3px;
+  text-align: center;
+}
+
